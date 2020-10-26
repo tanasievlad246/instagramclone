@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 
@@ -48,5 +49,26 @@ class PostsController extends Controller
         return view('posts.show', [
             'post' => $post
         ]);
+    }
+
+    public function index()
+    {
+        $users = auth()->user()->following()->pluck('profiles.user_id');
+
+        /*
+         * Loads the posts where user_id is in the users array
+         * Sorts them by latest
+         * Connects them with the model User
+         * Paginates them by 5
+         * */
+        $posts = Post::whereIn('user_id', $users)->latest()->with('user')->paginate(5);
+
+        return view('posts.index', compact('posts'));
+    }
+
+    public function discover()
+    {
+        $posts = Post::all()->sortByDesc('created_at');
+        return view('posts.discover', compact('posts'));
     }
 }

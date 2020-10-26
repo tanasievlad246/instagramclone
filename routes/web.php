@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function() {
-    return view('welcome');
-});
+Route::get('/', [App\Http\Controllers\PostsController::class, 'index']);
+
+Route::get('/discover', [App\Http\Controllers\PostsController::class, 'discover']);
 
 Auth::routes();
 
@@ -32,6 +32,11 @@ Route::patch('/profile/{user}', [App\Http\Controllers\ProfilesController::class,
 Route::post('/p', [App\Http\Controllers\PostsController::class, 'store']);
 
 Route::get('/p/{post}', [App\Http\Controllers\PostsController::class, 'show']);
+
+Route::get('/email', function () {
+    return new \App\Mail\NewUserWelcomeMail();
+});
+
 
 //Route::get('/phpinfo', function() {
 //    phpinfo();
