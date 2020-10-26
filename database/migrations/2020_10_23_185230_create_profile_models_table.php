@@ -15,10 +15,11 @@ class CreateProfileModelsTable extends Migration
     {
         Schema::create('profile_models', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id'); //creates column for user_id
+            $table->bigInteger('user_id'); //creates column for user_id
             $table->string('title')->nullable();
             $table->text('description')->nullable();
             $table->string('url')->nullable();
+            $table->string('image')->nullable();
             $table->timestamps();
             $table->index('user_id'); //creates foreign key on user_id
         });

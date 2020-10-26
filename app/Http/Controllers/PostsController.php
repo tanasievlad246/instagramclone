@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
 
 class PostsController extends Controller
 {
@@ -25,6 +27,9 @@ class PostsController extends Controller
 
         $imagePath = request('image')->store('uploads', 'public');
 
+        $image = Image::make(public_path("storage/{$imagePath}"))->fit('1200', '1200');
+        $image->save();
+
         //creates a new post with the caption from data and uploads img at the path created
         auth()->user()->posts()->create([
             "caption" => $data['caption'],
@@ -36,5 +41,12 @@ class PostsController extends Controller
 //        \App\Models\Post::create($data);
 
 //        dd(request()->all());
+    }
+
+    public function show(\App\Models\Post $post)
+    {
+        return view('posts.show', [
+            'post' => $post
+        ]);
     }
 }
