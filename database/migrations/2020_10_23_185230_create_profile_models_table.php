@@ -13,7 +13,7 @@ class CreateProfileModelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('profile_models', function (Blueprint $table) {
+        Schema::create('profiles', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id'); //creates column for user_id
             $table->string('title')->nullable();

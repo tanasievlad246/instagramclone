@@ -49,7 +49,12 @@ class User extends Authenticatable
 
     public function profile()
     {
-        return $this->hasOne(ProfileModel::class);
+        return $this->hasOne(Profile::class);
+    }
+
+    public function following()
+    {
+        return $this->belongsToMany(Profile::class);
     }
 
     protected static function boot()
